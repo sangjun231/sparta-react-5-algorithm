@@ -11,29 +11,56 @@
 // 입력: "banana"
 // 출력: 'a' (혹은 'n')
 
-
 function mostFrequentChar(s) {
-    // 이곳에 함수 작성을 해주세요.
+  // 문자와 갯수를 키:값 으로 저장하기위해 빈 객체 선언
+  const count = {};
+
+  // 가장 큰 값을 저장 할 숫자형 변수 선언
+  let maxCount = 0;
+
+  // 가장 큰 값의 키를 저장 할 문자형 변수 선언
+  let mostChar = "";
+
+  // 입력 받은 문자열의 문자를 활용하기위해 순회
+  for (let i = 0; i < s.length; i++) {
+    // 전달 받은 문자열을 순회하면서 객체 프로퍼티 확인
+    if (count[s[i]]) {
+      // 같은 아스키코드일 경우 키 값 증가
+      count[s[i]]++;
+    } else {
+      // 처음 등장한 아스키코드일 경우 객체에 저장 후 프로퍼티에 값 1 할당
+      count[s[i]] = 1;
+    }
+
+    // 객체 속성 값 중 최대값 탐색 -> 최대값의 키 값 할당
+    if (count[s[i]] >= maxCount) {
+      maxCount = count[s[i]];
+      mostChar = s[i];
+    }
+  }
+
+  return mostChar;
 }
 
 // 테스트 코드
 function testMostFrequentChar() {
-    const testCases = [
-        { input: "banana", expected: ['a', 'n'] },
-        { input: "apple", expected: ['p'] },
-        { input: "mississippi", expected: ['i', 's'] },
-        { input: "aabbcc", expected: ['a', 'b', 'c'] },
-    ];
+  const testCases = [
+    { input: "banana", expected: ["a", "n"] },
+    { input: "apple", expected: ["p"] },
+    { input: "mississippi", expected: ["i", "s"] },
+    { input: "aabbcc", expected: ["a", "b", "c"] },
+  ];
 
-    testCases.forEach(({input, expected}, index) => {
-        try {
-            const result = mostFrequentChar(input);
-            if (!expected.includes(result)) throw new Error(`Expected one of ${expected}, but got ${result}`);
-            console.log(`Test ${index + 1}: Passed`);
-        } catch (error) {
-            console.log(`Test ${index + 1}: Failed - ${error.message}`);
-        }
-    });
+  testCases.forEach(({ input, expected }, index) => {
+    try {
+      const result = mostFrequentChar(input);
+      if (!expected.includes(result))
+        throw new Error(`Expected one of ${expected}, but got ${result}`);
+      console.log(`Test ${index + 1}: Passed`);
+    } catch (error) {
+      console.log(`Test ${index + 1}: Failed - ${error.message}`);
+    }
+  });
 }
 
 // 테스트 함수 호출 : 터미널에 node practice2-1.js 실행
