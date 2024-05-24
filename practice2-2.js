@@ -11,30 +11,52 @@
 // 입력: "apple", "pineapple"
 // 출력: new Set(['p', 'l', 'e'])
 
+function commonCharacters(Character1, Character2) {
+  // 결과를 집합 형태로 반환하기 위한 빈 배열 선언
+  const arr = [];
 
-function commonCharacters(s1, s2) {
-    // 작성할 코드
+  // 전달 받은 문자열의 대소문자를 구분하지 않기위해 소문자로 통일
+  const lowerCharacter1 = Character1.toLowerCase();
+  const lowerCharacter2 = Character2.toLowerCase();
+
+  // 매개변수끼리 비교하기 위해 매개변수 중 아무거나 하나를 순회
+  for (let i = 0; i < Character1.length; i++) {
+    // 순회하면서 다른 매개변수에 같은 값이 있다면 빈 배열에 추가
+    if (lowerCharacter2.includes(lowerCharacter1[i])) {
+      arr.push(lowerCharacter1[i]);
+    }
+  }
+
+  // 결과 배열 내 중복된 값을 지우기 위해 JS 내장 객체 Set 사용
+  // 객체를 생성하기 위해 생성자 함수 new Set() 생성
+  return new Set(arr);
 }
 
 // 테스트 코드
 function testCommonCharacters() {
-    const testCases = [
-        { input: ["apple", "pineapple"], expected: new Set(['a', 'p', 'l', 'e']) },
-        { input: ["hello", "world"], expected: new Set(['o', 'l']) },
-        { input: ["abc", "def"], expected: new Set() },
-        { input: ["abcdef", "fedcba"], expected: new Set(['a', 'b', 'c', 'd', 'e', 'f']) },
-    ];
+  const testCases = [
+    { input: ["apple", "pineapple"], expected: new Set(["a", "p", "l", "e"]) },
+    { input: ["hello", "world"], expected: new Set(["o", "l"]) },
+    { input: ["abc", "def"], expected: new Set() },
+    {
+      input: ["abcdef", "fedcba"],
+      expected: new Set(["a", "b", "c", "d", "e", "f"]),
+    },
+  ];
 
-    testCases.forEach(({input, expected}, index) => {
-        try {
-            const result = new Set(commonCharacters(input[0], input[1]));
-            const isEqual = expected.size === result.size && [...expected].every(value => result.has(value));
-            if (!isEqual) throw new Error(`Expected ${[...expected]}, but got ${[...result]}`);
-            console.log(`Test ${index + 1}: Passed`);
-        } catch (error) {
-            console.log(`Test ${index + 1}: Failed - ${error.message}`);
-        }
-    });
+  testCases.forEach(({ input, expected }, index) => {
+    try {
+      const result = new Set(commonCharacters(input[0], input[1]));
+      const isEqual =
+        expected.size === result.size &&
+        [...expected].every((value) => result.has(value));
+      if (!isEqual)
+        throw new Error(`Expected ${[...expected]}, but got ${[...result]}`);
+      console.log(`Test ${index + 1}: Passed`);
+    } catch (error) {
+      console.log(`Test ${index + 1}: Failed - ${error.message}`);
+    }
+  });
 }
 
 // 테스트 함수 호출 터미널에 node practice2-2.js 실행
