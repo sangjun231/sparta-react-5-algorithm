@@ -9,45 +9,52 @@
 // 예시:
 
 // 입력: "banana"
-// 출력: 'a' (혹은 'n')
+// 출력: 'a'
 
-function mostFrequentChar(s) {
-  // 문자와 갯수를 키:값 으로 저장하기위해 빈 객체 선언
-  const count = {};
-
-  // 가장 큰 값을 저장 할 숫자형 변수 선언
-  let maxCount = 0;
-
-  // 가장 큰 값의 키를 저장 할 문자형 변수 선언
-  let mostChar = "";
-
-  // 입력 받은 문자열의 문자를 활용하기위해 순회
+function mostFrequentChar1(s) {
+  const char = {};
+  let max = 0;
+  let maxChar = [];
   for (let i = 0; i < s.length; i++) {
-    // 전달 받은 문자열을 순회하면서 객체 프로퍼티 확인
-    if (count[s[i]]) {
-      // 같은 아스키코드일 경우 키 값 증가
-      count[s[i]]++;
+    if (!char[s[i]]) {
+      char[s[i]] = 1;
     } else {
-      // 처음 등장한 아스키코드일 경우 객체에 저장 후 프로퍼티에 값 1 할당
-      count[s[i]] = 1;
-    }
-
-    // 객체 속성 값 중 최대값 탐색 -> 최대값의 키 값 할당
-    if (count[s[i]] >= maxCount) {
-      maxCount = count[s[i]];
-      mostChar = s[i];
+      char[s[i]]++;
     }
   }
+  for (let i in char) {
+    if (char[i] > max) {
+      max = char[i];
+      maxChar = i;
+    }
+  }
+  return maxChar;
+}
 
-  return mostChar;
+function mostFrequentChar2(s) {
+  const charCount = {};
+  for (let i = 0; i < s.length; i++) {
+    const char = s[i];
+    charCount[char] ? (charCount[char] += 1) : (charCount[char] = 1);
+  }
+  let maxChar = "";
+  let maxCount = 0;
+  for (const char in charCount) {
+    if (charCount[char] > maxCount) {
+      maxCount = charCount[char];
+      maxChar = char;
+    }
+  }
+  return maxChar;
 }
 
 // 테스트 코드
 function testMostFrequentChar() {
   const testCases = [
-    { input: "banana", expected: ["a", "n"] },
-    { input: "apple", expected: ["p"] },
+    { input: "banana", expected: ["a"] },
+    { input: "appllaaaae", expected: ["a"] },
     { input: "mississippi", expected: ["i", "s"] },
+    { input: "mississippiss", expected: ["s"] },
     { input: "aabbcc", expected: ["a", "b", "c"] },
   ];
 

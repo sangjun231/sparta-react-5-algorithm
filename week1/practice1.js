@@ -16,20 +16,18 @@
 // 출력: {'h': 1, 'e': 1, 'l': 3, 'o': 2, ' ': 1, 'W': 1, 'r': 1, 'd': 1}
 
 function countCharacters(s) {
-  // 결과를 객체 형태로 반환하기 위해 빈 객체 선언
-  const count = {};
-  // 입력 받은 문자열의 문자 갯수를 세기 위해 순회
+  const result = new Map();
   for (let i = 0; i < s.length; i++) {
-    // 결과값 내에 전달 받은 문자열을 순회하면서 저장
-    // 같은 아스키코드일 경우 센 갯수 증가
-    if (count[s[i]]) {
-      count[s[i]]++;
+    let letter = s[i];
+    if (result.get(letter)) {
+      result.set(letter, result.get(letter) + 1);
     } else {
-      // 처음 등장한 아스키코드일 경우 1 할당
-      count[s[i]] = 1;
+      result.set(letter, 1);
     }
   }
-  return count;
+
+  const answer = Object.fromEntries(result.entries());
+  return answer;
 }
 
 // 테스트 코드
