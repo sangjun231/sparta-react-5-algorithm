@@ -30,17 +30,18 @@ function findLongestPalindrome(words) {
   let palindrome = "";
 
   words.forEach((word) => {
-    if (palindrome.length < word.length) {
-      palindrome = word;
-    } else if (word.length === palindrome.length) {
-      // word.sort((a, b) => b - a);
-      // palindrome = word;
-      if (palindrome > word) {
+    if (isPalindrome(word)) {
+      if (palindrome.length < word.length) {
         palindrome = word;
+      } else if (word.length === palindrome.length) {
+        if (palindrome > word) {
+          palindrome = word;
+        }
       }
     }
   });
-
+  // 정규식이나 이해가 잘 안되는 부분을 구글링을 하긴 했으나...
+  // 여기까지만 해내고 끝까지는 못 풀었습니다...
   return palindrome;
 }
 
